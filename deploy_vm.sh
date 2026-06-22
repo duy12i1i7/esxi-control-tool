@@ -78,10 +78,10 @@ gzip -c9 userdata.yaml | base64 > userdata.b64
 
 echo "------------------------------------------"
 echo "[*] 1. Đang nhân bản máy ảo từ $TPL_NAME..."
-$GOVC_CMD vm.clone -vm "$TPL_NAME" -name "$VM_NAME" -c "$VM_CPU" -m "$VM_RAM" -net "$VM_NET"
+$GOVC_CMD vm.clone -vm "$TPL_NAME" -c "$VM_CPU" -m "$VM_RAM" -net "$VM_NET" "$VM_NAME"
 
 echo "[*] 2. Đang mở rộng ổ cứng lên ${VM_DISK}GB..."
-$GOVC_CMD vm.disk.change -vm "$VM_NAME" -disk "$VM_NAME/disk1" -size "${VM_DISK}G"
+$GOVC_CMD vm.disk.change -vm "$VM_NAME" -size "${VM_DISK}G"
 
 echo "[*] 3. Đang nhúng cấu hình Cloud-init vào ESXi GuestInfo..."
 $GOVC_CMD vm.change -vm "$VM_NAME" \
