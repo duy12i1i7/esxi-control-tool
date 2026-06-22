@@ -1,20 +1,5 @@
 #!/bin/bash
 
-export GOVC_INSECURE=1
-export GOVC_URL="https://${ESXI_USER}:${ESXI_PASS}@${ESXI_IP}/sdk"
-
-# Determine path to govc
-if ! ./govc about > /dev/null 2>&1; then
-    if ! govc about > /dev/null 2>&1; then
-        echo "[!] Error: govc command not found. Please install govc."
-        exit 1
-    else
-        GOVC_CMD="govc"
-    fi
-else
-    GOVC_CMD="./govc"
-fi
-
 read -p "Nhập IP của ESXi (VD: 192.168.100.3): " ESXI_IP
 read -p "Nhập Username ESXi: " ESXI_USER
 read -sp "Nhập Password ESXi: " ESXI_PASS
@@ -28,6 +13,21 @@ read -p "Network Port Group (VD: VM Network): " VM_NET
 read -p "Username OS (VD: ubuntu): " OS_USER
 read -sp "Password OS (VD: Avis@11235813): " OS_PASS
 echo ""
+
+export GOVC_INSECURE=1
+export GOVC_URL="https://${ESXI_USER}:${ESXI_PASS}@${ESXI_IP}/sdk"
+
+# Determine path to govc
+if ! ./govc about > /dev/null 2>&1; then
+    if ! govc about > /dev/null 2>&1; then
+        echo "[!] Error: govc command not found or invalid credentials. Please check."
+        exit 1
+    else
+        GOVC_CMD="govc"
+    fi
+else
+    GOVC_CMD="./govc"
+fi
 
 export GOVC_INSECURE=1
 export GOVC_URL="https://${ESXI_USER}:${ESXI_PASS}@${ESXI_IP}/sdk"
